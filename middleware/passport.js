@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'pwd' },
     async function (email, password, done) {
-        const userData = await User.findOne({ email: email })
+        const userData = await userSchema.findOne({ email: email })
         if (userData) {
             bcrypt.compare(password, userData.password, async (err, result) => {
                 if (err) {
@@ -30,7 +30,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await User.findById(id);
+        const user = await userSchema.findById(id);
 
         done(null, user);
     } catch (err) {

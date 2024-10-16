@@ -1,4 +1,4 @@
-const blogModel = require('../models/blogModel');
+const blogModel = require('../model/db/blogschema');
 const fs = require('fs');
 
 const blogAdd = (req, res) => {
@@ -16,11 +16,9 @@ const blogAddData = async (req, res) => {
             user_id: req.user._id
         })
 
-        // console.log("blogData", blogData);
 
 
         const blog = await blogData.save();
-        // console.log("blog", blog);
         res.redirect('/blog');
     } catch (error) {
         res.redirect('/blog-add');
@@ -33,7 +31,6 @@ const blogEdit = async (req, res) => {
 
     const blogData = await blogModel.findOne({ _id: id });
 
-    // console.log("blogData", blogData);
 
     res.render('blog-edit.ejs', { blogData })
 }

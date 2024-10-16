@@ -1,4 +1,4 @@
-const userModel = require('../models/userModel');
+const userSchema = require('../model/db/userschema');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const otpGenerator = require('otp-generator');
@@ -18,7 +18,7 @@ const transpoter = nodemailer.createTransport({
 let myOTP = null;
 
 const changePassword = (req, res) => {
-    res.render('change-password');
+    res.render('changepass');
 }
 
 const changePasswordData = (req, res) => {
@@ -47,11 +47,11 @@ const changePasswordData = (req, res) => {
             } else {
                 console.log("password not match");
 
-                res.redirect('/change-password');
+                res.redirect('/changepass');
 
             }
         } else {
-            res.redirect('/change-password');
+            res.redirect('/changepass');
         }
 
 
@@ -62,7 +62,7 @@ const changePasswordData = (req, res) => {
 }
 
 const forgotPassword = (req, res) => {
-    res.render('forgot-password');
+    res.render('forgetpass');
 }
 
 const forgotPasswordData = async (req, res) => {
@@ -75,10 +75,6 @@ const forgotPasswordData = async (req, res) => {
 
         if (userEmail) {
 
-            // const otp = otpGenerator.generate(4, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false });
-            // console.log("user OTP", otp);
-
-            // myOTP = otp;
 
             const token = randomstring.generate(10);
             console.log("token", token);
@@ -87,10 +83,9 @@ const forgotPasswordData = async (req, res) => {
 
 
             const link = `http://localhost:3004/newPass/${userEmail._id}`;
-            // console.log("link", link);
 
             const mailOptions = {
-                from: "akradadiya28@gmail",
+                from: "pratyushbhatiya106@gmail.com",
                 to: userEmail.email,
                 subject: "Reset Password",
                 text: `Click on link to reset your password ${link}`,
@@ -102,7 +97,6 @@ const forgotPasswordData = async (req, res) => {
                 } else {
                     console.log("Email sent:", data.response);
                     res.send("Email sent check your email");
-                    // res.redirect(`/otp/${userEmail._id}`);
                 }
             });
         } else {
@@ -155,7 +149,6 @@ const newPass = async (req, res) => {
     } catch (error) {
         console.log("error", error);
     }
-    // res.render('new-pass', { id: req.params.id });
 }
 
 const newPassWord = (req, res) => {

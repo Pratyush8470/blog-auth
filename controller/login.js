@@ -7,7 +7,7 @@ const logincon = (req, res) => {
 
 const loginuser = (req, res) => {
     req.flash('success', 'You Have Logged-in Successfully');
-    req.redirect('/');
+    res.redirect('/');
 }
 
 module.exports = { logincon, loginuser };
