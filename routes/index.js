@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer')
 const con = require('../controller/controller');
 const logcon = require('../controller/login');
 const signupcon = require('../controller/signup');
@@ -18,11 +19,11 @@ const topic = require('../model/db/topic');
 router.get('/', con.index);
 
 // login
-router.get('/login', logcon.logincon);
+router.get('/logInForm', logcon.logincon);
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), logcon.loginuser);
 
 // signup
-router.get('/register', signupcon.registerForm);
+router.get('/registerForm', signupcon.registerForm);
 router.post('/register', upload.single('userImg'), signupcon.registeruser);
 
 // profile
@@ -45,17 +46,17 @@ router.post('/blog-update/:id', upload.single('blogImg'), blogAddCon.blogUpdate)
 router.get('/blog-delete/:id', Auth, blogAddCon.blogDelete);
 
 //pwd
-router.get('/changepassword', Auth, changePwdCon.changePassword);
-router.post('/changePasswordData', changePwdCon.changePasswordData);
+router.get('/changepassword', Auth, changePwdCon.chanePass);
+router.post('/changePassword', changePwdCon.changePassword);
 
-router.get('/forgotPassword', changePwdCon.forgotPassword);
-router.post('/forgotPasswordData', changePwdCon.forgotPasswordData);
+// router.get('/forgotPassword', changePwdCon.forgotPassword);
+// router.post('/forgotPasswordData', changePwdCon.forgotPasswordData);
 
-router.get('/otp/:id', changePwdCon.otp);
-router.post('/otpCheck/:id', changePwdCon.otpCheck);
+// router.get('/otp/:id', changePwdCon.otp);
+// router.post('/otpCheck/:id', changePwdCon.otpCheck);
 
-router.get('/newPass/:id', changePwdCon.newPass);
-router.post('/newPassWord/:id', changePwdCon.newPassWord);
+// router.get('/newPass/:id', changePwdCon.newPass);
+// router.post('/newPassWord/:id', changePwdCon.newPassWord);
 
 // topic
 

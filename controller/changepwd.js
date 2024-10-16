@@ -1,190 +1,42 @@
-const userSchema = require('../model/db/userschema');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const otpGenerator = require('otp-generator');
-const nodemailer = require('nodemailer');
-const randomstring = require("randomstring");
+const userSchema = require("../model/db/userschema")
+const bcrypt = require("bcrypt")
 
-const transpoter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: "pratyushbhatiya106@gmail.com",
-        pass: "ykxo hobo qbcd uaof"
-    },
-});
+const chanePass = (req, res) => {
 
-let myOTP = null;
-
-const changePassword = (req, res) => {
-    res.render('changepass');
+    res.render("changepass");
 }
 
-const changePasswordData = (req, res) => {
+const changePassword = (req, res) => {
 
     const { password } = req.user;
 
-    const { current_pwd, new_pwd, con_new_pwd } = req.body;
+    console.log("password", password);
 
-    bcrypt.compare(current_pwd, password, (err, result) => {
+    const { currentpass, newpass, confirmpass} = req.body;
 
-        if (result) {
-            if (con_new_pwd === new_pwd) {
-                console.log("paasword Match");
+    bcrypt.compare(currentpass, password, async (err, result) => {
+        if(result) {   
+            console.log("result", result);
+            if(newpass === confirmpass) {
+                bcrypt.hash(newpass, 10, async (err, hashPass) => {
 
-                bcrypt.hash(new_pwd, saltRounds, async (err, hash) => {
-
-                    const newPass = await userSchema.updateOne({ _id: req.user._id }, { password: hash });
-
-                    console.log("newPass", newPass);
-
-                    res.redirect('/login');
-
-
+                    if(!err) {
+                        const updatePass = await userSchema.updateOne(
+                            { _id : req.user._id },
+                            { password : hashPass }
+                        )
+                        console.log("updatePass", updatePass);        
+                        res.redirect("/logInForm")
+                    } else {
+                        console.log(err, "password not match")
+                    }
                 })
-
             } else {
-                console.log("password not match");
-
-                res.redirect('/changepass');
-
+                console.log(err, "new password not match")
+                res.redirect("/logInForm")
             }
-        } else {
-            res.redirect('/changepass');
-        }
-
-
+        } 
     })
-
-
-
 }
 
-const forgotPassword = (req, res) => {
-    res.render('forgetpass');
-}
-
-const forgotPasswordData = async (req, res) => {
-
-    const { email } = req.body;
-
-    try {
-
-        const userEmail = await userSchema.findOne({ email: email });
-
-        if (userEmail) {
-
-
-            const token = randomstring.generate(10);
-            console.log("token", token);
-
-            await userSchema.updateOne({ _id: userEmail._id }, { tokenReset: token });
-
-
-            const link = `http://localhost:3004/newPass/${userEmail._id}`;
-
-            const mailOptions = {
-                from: "pratyushbhatiya106@gmail.com",
-                to: userEmail.email,
-                subject: "Reset Password",
-                text: `Click on link to reset your password ${link}`,
-            };
-
-            transpoter.sendMail(mailOptions, (err, data) => {
-                if (err) {
-                    console.log("error", err);
-                } else {
-                    console.log("Email sent:", data.response);
-                    res.send("check your email");
-                }
-            });
-        } else {
-            console.log("user not found");
-            res.redirect('/login');
-        }
-    } catch (error) {
-        res.redirect('/forgotPassword');
-    }
-}
-
-const otp = (req, res) => {
-    res.render('otp', { id: req.params.id });
-}
-
-const otpCheck = (req, res) => {
-
-    const { id } = req.params;
-    const { otp } = req.body;
-
-    if (otp == myOTP) {
-        res.redirect(`/newPass/${id}`);
-    } else {
-        res.redirect(`/login/${id}`);
-    }
-
-}
-
-const newPass = async (req, res) => {
-
-    const { id } = req.params;
-    console.log("user id", id);
-
-    try {
-
-        const user = await userSchema.findOne({ _id: id });
-
-        if (user) {
-            console.log("user", user);
-            if (user.tokenReset) {
-                console.log("token", user.tokenReset);
-                res.render('new-pass', { id: req.params.id });
-            } else {
-                console.log("invalid token");
-                res.send("invalid url");
-            }
-        } else {
-            console.log("invalid token");
-        }
-    } catch (error) {
-        console.log("error", error);
-    }
-}
-
-const newPassWord = (req, res) => {
-
-    const { pwd, new_pwd } = req.body;
-
-    if (pwd === new_pwd) {
-        console.log("paasword Match");
-
-        bcrypt.hash(pwd, saltRounds, async (err, hash) => {
-
-            if (err) {
-                console.log("err", err);
-                res.redirect('/forgotPassword');
-            }
-
-            try {
-                const newPass = await userSchema.updateOne({ _id: req.params.id }, { password: hash, tokenReset: null });
-                console.log("newPass", newPass);
-
-                res.redirect('/login');
-
-            } catch (error) {
-                console.log("password not matchhh", error);
-                res.redirect('/forgotPassword');
-            }
-        })
-
-    } else {
-        console.log("password not match");
-
-        res.redirect('/forgotPassword');
-
-    }
-
-}
-
-
-module.exports = { changePassword, changePasswordData, forgotPassword, forgotPasswordData, otp, otpCheck, newPass, newPassWord };
+module.exports = { chanePass, changePassword }

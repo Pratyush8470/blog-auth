@@ -1,31 +1,68 @@
-const blogModel = require('../model/db/blogschema');
+const blogSchema = require("../model/db/blogschema.js");
+const commentModel = require("../model/db/comment.js");
 
-const blog = async (req, res) => {
+const showBlog = async (req, res) => {
+    console.log(req.body);
+    const addComment = await commentModel.find({}).populate("userId");
 
-    let blogData = await blogModel.find();
+    console.log("addComment", addComment);
 
+    let blogData = await blogSchema.find({});
 
-    res.render('blog', {
-        userImg: req.user.path,
-        fname: req.user.fname,
-        lname: req.user.lname,
-        email: req.user.email,
-        blogData: blogData
-    });
-
+    console.log("blogData", blogData);
+    res.render('blog',
+        {
+            userPath: req.user.userPath,
+            userName: req.user.userName,
+            email: req.user.email,
+            role: req.user.role,
+            blogData: blogData,
+            addComment: addComment
+        });
 }
 
-const myblog = async (req, res) => {
+const addBlog = async (req, res) => {
 
-    let blogData = await blogModel.find({ user_id: req.user._id });
+    const add = new blogSchema({
+        imgPath: req.file.path,
+        title: req.body.title,
+        userName: req.body.userName,
+        date: req.body.date,
+        description: req.body.description
+    })
 
-    res.render('myblog', {
-        userImg: req.user.path,
-        fname: req.user.fname,
-        lname: req.user.lname,
-        email: req.user.email,
-        blogData: blogData
-    });
+    console.log("added", add);
+
+    try {
+        const newBlog = await addBlogData.save();
+        console.log("newblog", newBlog);
+        res.redirect('/blog');
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-module.exports = { blog, myblog };
+
+const addComents = async (req, res) => {
+    try {
+        const addComment = new commentModel({
+            comment: req.body.comment,
+            userId: req.user._id,  
+            blogId: req.body.blogId 
+        });
+
+        const newComment = await addComment.save();
+        console.log("newComment", newComment);
+
+        res.redirect('/blog');
+
+        const getComment = await commentModel.find({}).populate("blogId");
+        console.log("getCommentsData", getComment);
+
+    } catch (error) {
+        console.log("Error saving comment:", error);
+    }
+};
+
+
+module.exports = { showBlog, addBlog, addComents };

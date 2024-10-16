@@ -2,7 +2,7 @@ const userSchema = require('../model/db/userschema');
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const registerForm = (req, res) => {
+const register = (req, res) => {
     res.render("signup")
 }
 
@@ -12,7 +12,7 @@ const registeruser = async (req, res) => {
 
         bcrypt.hash(req.body.pwd, saltRounds, async (err, hash) => {
 
-            const userData = new userModel({
+            const userData = new userSchema({
                 path: req.file.path,
                 fname: req.body.fname,
                 lname: req.body.lname,
@@ -24,14 +24,14 @@ const registeruser = async (req, res) => {
             try {
                 const user = await userData.save();
             } catch (error) {
-                res.redirect('/login');
+                res.redirect('/loginForm');
             }
         });
 
     } else {
-        res.redirect('/register');
+        res.redirect('/registerForm');
     }
 }
 
 
-module.exports = { registerForm, registeruser }
+module.exports = { register, registeruser }

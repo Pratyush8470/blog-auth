@@ -4,7 +4,7 @@ const logout = (req, res) => {
             next();
         }
     });
-    res.redirect('/login');
+    res.redirect('/loginForm');
 }
 
 module.exports = { logout }; 

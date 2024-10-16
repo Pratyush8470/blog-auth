@@ -9,7 +9,7 @@ const index = async (req, res) => {
             success: req.flash('success')
         });
     } else {
-        res.redirect('/login');
+        res.redirect('/loginform');
     }
 
 
