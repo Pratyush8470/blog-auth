@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const blogAdd = (req, res) => {
 
-    res.render('blog-add');
+    res.render('addblog');
 }
 
 const blogAddData = async (req, res) => {
@@ -21,7 +21,7 @@ const blogAddData = async (req, res) => {
         const blog = await blogData.save();
         res.redirect('/blog');
     } catch (error) {
-        res.redirect('/blog-add');
+        res.redirect('/addblog');
     }
 }
 
@@ -32,7 +32,7 @@ const blogEdit = async (req, res) => {
     const blogData = await blogModel.findOne({ _id: id });
 
 
-    res.render('blog-edit.ejs', { blogData })
+    res.render('editblog.ejs', { blogData })
 }
 
 const blogUpdate = async (req, res) => {
@@ -50,7 +50,7 @@ const blogUpdate = async (req, res) => {
         const blog = await blogModel.updateOne({ _id: id }, blogData);
         res.redirect('/blog');
     } catch (error) {
-        res.redirect('/blog-edit');
+        res.redirect('/editblog');
     }
 }
 

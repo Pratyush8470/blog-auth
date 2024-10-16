@@ -10,7 +10,7 @@ const transpoter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: "akradadiya28@gmail.com",
+        user: "pratyushbhatiya106@gmail.com",
         pass: "ykxo hobo qbcd uaof"
     },
 });
@@ -35,7 +35,7 @@ const changePasswordData = (req, res) => {
 
                 bcrypt.hash(new_pwd, saltRounds, async (err, hash) => {
 
-                    const newPass = await userModel.updateOne({ _id: req.user._id }, { password: hash });
+                    const newPass = await userSchema.updateOne({ _id: req.user._id }, { password: hash });
 
                     console.log("newPass", newPass);
 
@@ -71,7 +71,7 @@ const forgotPasswordData = async (req, res) => {
 
     try {
 
-        const userEmail = await userModel.findOne({ email: email });
+        const userEmail = await userSchema.findOne({ email: email });
 
         if (userEmail) {
 
@@ -79,7 +79,7 @@ const forgotPasswordData = async (req, res) => {
             const token = randomstring.generate(10);
             console.log("token", token);
 
-            await userModel.updateOne({ _id: userEmail._id }, { tokenReset: token });
+            await userSchema.updateOne({ _id: userEmail._id }, { tokenReset: token });
 
 
             const link = `http://localhost:3004/newPass/${userEmail._id}`;
@@ -96,7 +96,7 @@ const forgotPasswordData = async (req, res) => {
                     console.log("error", err);
                 } else {
                     console.log("Email sent:", data.response);
-                    res.send("Email sent check your email");
+                    res.send("check your email");
                 }
             });
         } else {
@@ -132,7 +132,7 @@ const newPass = async (req, res) => {
 
     try {
 
-        const user = await userModel.findOne({ _id: id });
+        const user = await userSchema.findOne({ _id: id });
 
         if (user) {
             console.log("user", user);
@@ -166,7 +166,7 @@ const newPassWord = (req, res) => {
             }
 
             try {
-                const newPass = await userModel.updateOne({ _id: req.params.id }, { password: hash, tokenReset: null });
+                const newPass = await userSchema.updateOne({ _id: req.params.id }, { password: hash, tokenReset: null });
                 console.log("newPass", newPass);
 
                 res.redirect('/login');
