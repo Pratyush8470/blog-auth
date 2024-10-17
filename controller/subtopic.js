@@ -1,7 +1,7 @@
 const subTopicSchema = require("../model/db/subtopic.js");
 const topicSchema = require("../model/db/topic.js")
 
-const addSubToPic = async (req, res) => {
+const subToPic = async (req, res) => {
 
     try {
         const topics = await topicSchema.find({});
@@ -17,7 +17,7 @@ const addSubToPic = async (req, res) => {
 }
 
 
-const addsubTopic = async (req, res) => {
+const addsubTopics = async (req, res) => {
     try {
         const { topicName, subTopicName } = req.body;
 
@@ -33,7 +33,7 @@ const addsubTopic = async (req, res) => {
         const newSubTopic = await subTopic.save();
         console.log("new :", newSubTopic);
 
-        res.redirect("/show_TopicseForm");
+        res.redirect("/showTopics");
 
 
     } catch (error) {
@@ -50,23 +50,23 @@ const showTopic = async (req, res) => {
         const subTopics = await subTopicSchema.find({}).populate("topicId");
         console.log("addSubTopic", subTopics);
 
-        res.render("showtopics", { topics, subTopics });
+        res.render("viewtopic", { topics, subTopics });
     } catch (error) {
         console.log("Error subtopics:", error);
     }
 }
-const subTopicSchema = async (req, res) => {
+const deletsubTopic= async (req, res) => {
     const { id } = req.params;
     try {
         const deleteSubTopic = await subTopicSchema.deleteOne({ _id: id });
 
         console.log("Deleted:", deleteSubTopic);
 
-        res.redirect("/show_TopicseForm");
+        res.redirect("/showTopics");
     } catch (error) {
 
         console.log("Error:", error);
     }
 };
 
-module.exports = { addSubToPic, addsubTopic, showTopic, deleteSubTopic_Con };
+module.exports = { subToPic, addsubTopics, showTopic, deletsubTopic };

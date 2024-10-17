@@ -52,13 +52,16 @@
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h3>Change Password</h3>
                         </div>
-                        <form action="/forgotPasswordData" method="post">
+                        <form action="/forgetPass" method="post">
                             <div class="form-floating mb-3">
                                 <input type="email" name="email" class="form-control" id="floatingText"
                                     placeholder="ente email id">
                                 <label for="floatingText">Email</label>
                             </div>
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Send Link</button>
+                            <div class="text-center mt-3">
+                                <a href="/loginForm" class="text-muted">Back to Login</a>
+                            </div>
                         </form>
                     </div>
                 </div>

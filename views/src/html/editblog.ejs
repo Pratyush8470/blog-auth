@@ -52,25 +52,30 @@
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h3>Add Blog</h3>
                         </div>
-                        <form action="/blog-update/<%= blogData._id %>" method="post" enctype="multipart/form-data">
+                        <form action="/myblogUpdate/<%= myBlogEdit._id %>" method="post" enctype="multipart/form-data">
                             <div class="form-floating mb-3">
                                 <input type="file" name="userImg" class="form-control" id="floatingText"
-                                    value="<%= blogData.path %>">
+                                    value="<%= myBlogEdit.path %>">
                                 <label for="floatingText">Blog Img</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" name="title" class="form-control" id="floatingText"
-                                    value="<%= blogData.title %>">
+                                    value="<%= myBlogEdit.userName %>">
+                                <label for="floatingText">User name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="title" class="form-control" id="floatingText"
+                                    value="<%= myBlogEdit.title %>">
                                 <label for="floatingText">Blog Title</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" name="description" class="form-control" id="floatingText"
-                                    value="<%= blogData.description %>">
+                                    value="<%= myBlogEdit.description %>">
                                 <label for="floatingText">Blog Description</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="email" name="date" class="form-control" id="floatingInput"
-                                    value="<%= blogData.date %>">
+                                    value="<%= myBlogEdit.date %>">
                                 <label for="floatingInput">Date</label>
                             </div>
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Edit Blog</button>

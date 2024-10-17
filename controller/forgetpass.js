@@ -32,7 +32,7 @@ const forgotPassowrd = async (req, res) => {
         console.log("refToken", refToken);
         await userSchema.updateOne({ email }, { refreshToken: refToken })
 
-        const link = `http://localhost:5012/resetPassForm/${user._id}`
+        const link = `http://localhost:5012/resetPass/${user._id}`
         console.log("link", link);
 
         const userAuth = nodemailer.createTransport({
@@ -64,18 +64,18 @@ const forgotPassowrd = async (req, res) => {
     }
 }
 
-const chackOtp = (req, res) => {
+const checkOtp = (req, res) => {
     res.render("chackotp", { id: req.params.id });
 };
 
-const chackOtpCon = async (req, res) => {
+const checkOtpCon = async (req, res) => {
     const { id } = req.params;
     const { otp } = req.body;
 
     if (OTP === otp) {
-        res.redirect(`/resetPassForm/${id}`);
+        res.redirect(`/resetPass/${id}`);
     } else {
-        res.redirect(`/chackOtpForm/${id}`);
+        res.redirect(`/checkOtp/${id}`);
     }
 };
 
@@ -87,7 +87,7 @@ const resetPass = async (req, res) => {
         if (loginUser) {
             console.log("loginUser", loginUser);
             if (loginUser.refreshToken) {
-                res.render("reset_Password", { id: req.params.id });
+                res.render("resetlinkpass", { id: req.params.id });
             } else {
                 res.redirect("/errorPage");
             }
@@ -121,10 +121,10 @@ const resetPassword = async (req, res) => {
         });
     } else {
         console.log("New password does not match confirmation");
-        res.redirect(`/resetPassForm/${id}`);
+        res.redirect(`/resetPass/${id}`);
     }
 };
 
 
 
-module.exports = { forgot, forgotPassowrd, chackOtp, chackOtpCon, resetPass, resetPassword, errorPage };
+module.exports = { forgot, forgotPassowrd, checkOtp, checkOtpCon, resetPass, resetPassword, errorPage };

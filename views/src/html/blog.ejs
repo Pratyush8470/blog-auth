@@ -189,8 +189,62 @@
             </nav>
             <!-- Navbar End -->
 
-
             <!-- blog -->
+
+            <div class="container-fluid">
+                <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                        <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h3>Add Blog</h3>
+                            </div>
+                            <form action="/showBlog" method="post" enctype="multipart/form-data">
+                                <div class="form-floating mb-3">
+                                    <input type="file" name="userImg" class="form-control" id="floatingText"
+                                        placeholder="jhondoe">
+                                    <label for="floatingText">Blog Img</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="title" class="form-control" id="floatingText"
+                                        placeholder="jhondoe">
+                                    <label for="floatingText">User Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="title" class="form-control" id="floatingText"
+                                        placeholder="jhondoe">
+                                    <label for="floatingText">Blog Title</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="description" class="form-control" id="floatingText"
+                                        placeholder="jhondoe">
+                                    <label for="floatingText">Blog Description</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="date" name="date" class="form-control" id="floatingInput"
+                                        placeholder="date">
+                                    <label for="floatingInput">Date</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Add Blog</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- blog-end -->
+            <!-- add comment modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add comment</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="container-fluid pt-4 px-4">
                 <div>
@@ -214,17 +268,43 @@
                                     <%=blogs.description%>
                                 </p>
                             </div>
+
+                            <!-- coment blog -->
+                            <h5>Comments:</h5>
+                            <% commentAdd.filter(comment=> comment.blogId.toString() ===
+                                post._id.toString()).forEach(comment => { %>
+                                <div class="comment-box">
+                                    <p>
+                                        <%= comment.userId.userName %> : <%= comment.comment %>
+                                    </p>
+                                </div>
                             <% }) %>
+                                    <!-- Comment  blog -->
+                                    <form class="d-flex" role="search" action="/coment" method="post">
+                                        <input type="hidden" name="blogId" value="<%= post._id %>">
+                                        <input class="form-control me-2" type="search" name="comment"
+                                            placeholder="comment" aria-label="Search">
+                                        <button class="btn btn-outline-primary" type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                        <% }) %>
                     </div>
                 </div>
             </div>
-            <!-- blog-end -->
         </div>
-        <!-- Content End -->
+    </div>
+    <!-- blog-end -->
+    </div>
+    <!-- Content End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->

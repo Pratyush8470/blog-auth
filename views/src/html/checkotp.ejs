@@ -43,49 +43,27 @@
         <!-- Spinner End -->
 
 
-        <!-- blog -->
-
+        <!-- otp -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h3>Add Blog</h3>
-                        </div>
-                        <form action="/addBlogData" method="post" enctype="multipart/form-data">
-                            <div class="form-floating mb-3">
-                                <input type="file" name="userImg" class="form-control" id="floatingText"
-                                    placeholder="jhondoe">
-                                <label for="floatingText">Blog Img</label>
+                        <form action="/check_Otp/<%= id %>" method="post">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h3>Enter otp</h3>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="title" class="form-control" id="floatingText"
-                                    placeholder="jhondoe">
-                                <label for="floatingText">Blog Title</label>
+                                <input type="text" class="form-control" id="newPassword" name="otp"
+                                    placeholder="Enter new OTP" required>
+                                <label for="newPassword" class="form-label">New OTP</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" name="description" class="form-control" id="floatingText"
-                                    placeholder="jhondoe">
-                                <label for="floatingText">Blog Description</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="date" name="date" class="form-control" id="floatingInput"
-                                    placeholder="date">
-                                <label for="floatingInput">Date</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Add Blog</button>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Submit OTP</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- blog-end -->
-    </div>
-    <!-- Content End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- otp -->
     </div>
 
     <!-- JavaScript Libraries -->

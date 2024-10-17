@@ -19,8 +19,8 @@ const addTopic = async (req, res) => {
 
     try{
         const newTopic = await add.save();
-        console.log("newTopic", newTopic);
-        res.redirect("/add_TopicForm");
+        console.log("new topic", newTopic);
+        res.redirect("/topic");
     }catch(error){
         console.log(error);
     }

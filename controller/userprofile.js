@@ -3,7 +3,7 @@ const userSchema = require('../model/db/userschema');
 
 const profile = async (req, res) => {
 
-    res.render('profile.ejs', {
+    res.render('profile', {
         userImg: req.user.path,
         fname: req.user.fname,
         lname: req.user.lname,
