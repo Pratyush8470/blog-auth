@@ -12,7 +12,7 @@ const showBlog = async (req, res) => {
     console.log("blogData", blogData);
     res.render('blog',
         {
-            userPath: req.user.userPath,
+            path: req.user.path,
             userName: req.user.userName,
             email: req.user.email,
             role: req.user.role,

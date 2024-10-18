@@ -66,7 +66,6 @@ const updatemyBlog = async (req, res) => {
                 console.log(err, "File was deleted!");
             }
         });
-        //new img upload
         myblogUpdate.imgPath = req.file.path
     }
 

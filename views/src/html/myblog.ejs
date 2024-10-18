@@ -45,40 +45,57 @@
 
         <!-- blog -->
 
-        <section class="container-fluid">
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">My Blog</h1>
+            <div class="row g-4">
+                <% if (myBlogData.length> 0) { %>
+                    <% myBlogData.forEach((blogs)=> { %>
+                        <div class="mx-auto" style="width: 1000px;">
+                            <div class="blog-post">
+                                <!-- Blog Image -->
+                                <img src="<%= blogs.imgPath %>" alt="Blog Image" class="blog-img img-fluid">
 
-            <div class="mb-4">
-                <h2 class="font-manrope text-4xl font-bold text-gray-900 text-center mb-4">My blog</h2>
-                <div class="flex flex-wrap">
-                    <% blogData.forEach((blogs)=>{ %>
-                        <div class="group w-4/12 border border-gray-300 rounded-2xl mb-4 mx-4">
-                            <div class="flex items-center">
-                                <img src="<%=blogs.path%>" alt="blogs img" class="rounded-t-2xl object-cover"
-                                    width="500" height="300px">
-                            </div>
-                            <div class="p-4 lg:p-6 transition-all duration-300 rounded-b-2xl group-hover:bg-gray-50">
-                                <span class="text-indigo-600 font-medium mb-3 block">
-                                    <%=blogs.date%>
-                                </span>
-                                <h4 class="text-xl text-gray-900 font-medium leading-8 mb-1">
-                                    <%=blogs.title%>
-                                </h4>
-                                <p class="text-gray-500 leading-6 mb-1">
-                                    <%=blogs.description%>
-                                </p>
-                                <a href="/blog-edit/<%=blogs._id%>"
-                                    class="cursor-pointer text-lg text-indigo-600 font-semibold">Edit</a>
-                                ||
-                                <a href="/blog-delete/<%=blogs._id%>"
-                                    class="cursor-pointer text-lg text-red-600 font-semibold">Delete</a>
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <div class="d-flex justify-content-between pb-5">
+                                        <h4 class="blog-title fs-1">
+                                            <%= blogs.title %>
+                                        </h4>
+                                        <!-- Action Buttons (Edit/Delete) -->
+                                        <div
+                                            class="btn-group d-flex justify-content-center justify-content-center align-items-center">
+                                            <a href="/my_BlogEdit/<%= blogs._id %>" class="btn btn-primary mx-2 p-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                </svg>
+                                            </a>
+                                            <a href="/my_BlogDelete/<%= blogs._id %>" class="btn btn-danger mx-2 p-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="blog-description fs-4">
+                                        <%= blogs.description %>
+                                    </p>
+                                    <span class="blog-date pb-3 d-block">Post Date : <%= new
+                                            Date(blogs.date).toLocaleDateString('en-GB') %></span>
+                                </div>
                             </div>
                         </div>
-
                         <% }) %>
-                </div>
-
+                            <% } else { %>
+                                <p class="text-center">No blog posts available. Start by adding one!</p>
+                                <% } %>
             </div>
-        </section>
+        </div>
         <!-- blog-end -->
     </div>
     <!-- Content End -->
